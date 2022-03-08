@@ -1,0 +1,53 @@
+---
+spring:
+  profiles: client1
+  application:
+    name: client
+server:
+  port: 8888
+
+eureka:
+  instance:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/,http://localhost:9998/eureka/,http://localhost:9997/eureka/
+    healthcheck:
+      enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+# INFO ENDPOINT CONFIGURATION
+info:
+  app:
+    name: ${spring.application.name}
+
+---
+spring:
+  profiles: client2
+  application:
+    name: client
+server:
+  port: 8887
+
+eureka:
+  instance:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/,http://localhost:9998/eureka/,http://localhost:9997/eureka/
+
+
+---
+spring:
+  profiles: client3
+  application:
+    name: client
+server:
+  port: 8886
+
+eureka:
+  instance:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/,http://localhost:9998/eureka/,http://localhost:9997/eureka/

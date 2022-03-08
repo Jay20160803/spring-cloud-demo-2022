@@ -1,0 +1,43 @@
+
+---
+spring:
+  profiles: consumer1
+  application:
+    name: consumer
+server:
+  port: 7777
+
+eureka:
+  instance:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/,http://localhost:9998/eureka/,http://localhost:9997/eureka/
+
+---
+spring:
+  profiles: consumer2
+  application:
+    name: consumer
+server:
+  port: 7776
+
+eureka:
+  instance:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/,http://localhost:9998/eureka/,http://localhost:9997/eureka/
+
+
+---
+spring:
+  profiles: consumer3
+  application:
+    name: consumer
+server:
+  port: 7775
+
+eureka:
+  instance:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/,http://localhost:9998/eureka/,http://localhost:9997/eureka/
