@@ -35,13 +35,12 @@ eureka.instance.metadataMap
 ### 3.1 Feign 是一个申明式Web服务客户端
 集成了Eureka、Spring Cloud CircuitBreaker、Spring cloud LoadBalancer
 ### 3.2 如何在项目中添加Feign
-1、添加 spring-cloud-starter-openfeign 依赖
-
+1、添加 spring-cloud-starter-openfeign 依赖  
 2、添加 @EnableFeignClients 注解
 
 3、创建feignClient接口
 ### 3.3 @FeignClient 注解属性
-1、value/name : 客户端名称,用于创建Spring Cloud LoadBalancer 客户端
+1、value/name : 客户端名称,用于创建Spring Cloud LoadBalancer 客户端  
 2、url: （绝对值或仅主机名）指定 URL
 3、decode404 ：是否应该解码 404 而不是抛出 FeignExceptions
 4、configuration： 自定义feign client ,包括 feign.codec.Decoder, feign.codec.Encoder, feign.Contract
