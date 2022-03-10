@@ -33,6 +33,10 @@ spring:
   profiles: consumer3
   application:
     name: consumer
+  cloud:
+    loadbalancer:
+      cache:
+        enabled:
 server:
   port: 7775
 
@@ -41,3 +45,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:9999/eureka/,http://localhost:9998/eureka/,http://localhost:9997/eureka/
+
+feign:
+  httpclient:
+    enabled:
