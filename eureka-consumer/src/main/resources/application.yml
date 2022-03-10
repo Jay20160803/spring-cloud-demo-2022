@@ -4,6 +4,10 @@ spring:
   profiles: consumer1
   application:
     name: consumer
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
 server:
   port: 7777
 
