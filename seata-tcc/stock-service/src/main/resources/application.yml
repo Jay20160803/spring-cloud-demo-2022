@@ -1,0 +1,41 @@
+server:
+  port: 9092
+
+
+  # Nacos 注册中心地址
+spring:
+  application:
+    name: stock-service
+  datasource:
+    druid:
+      url: jdbc:mysql://119.3.123.94:3306/seata_stock?allowMultiQueries=true
+      driverClassName: com.mysql.cj.jdbc.Driver
+      username: root
+      password: Abc258258!@#
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.102.196.164:8848
+        group: "SEATA_GROUP"
+seata:
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      username: "nacos"
+      password: "nacos"
+      server-addr: 47.102.196.164:8848
+  config:
+    type: nacos
+    nacos:
+      server-addr: 47.102.196.164:8848
+      group : "SEATA_GROUP"
+      namespace: ""
+      dataId: "seataServer.properties"
+      username: "nacos"
+      password: "nacos"
+
+logging:
+  level:
+    io:
+      seata: debug

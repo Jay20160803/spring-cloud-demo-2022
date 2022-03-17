@@ -18,6 +18,8 @@
         <txc-version>2.8.74</txc-version>
         <mysql-connector>8.0.16</mysql-connector>
         <druid.version>1.1.18</druid.version>
+        <mybatis-plus>3.5.1</mybatis-plus>
+        <seata-all-version>1.4.2</seata-all-version>
     </properties>
 
     <modules>
@@ -25,6 +27,7 @@
         <module>eureka-client</module>
         <module>eureka-consumer</module>
         <module>seata</module>
+        <module>seata-tcc</module>
     </modules>
 
     <dependencyManagement>
