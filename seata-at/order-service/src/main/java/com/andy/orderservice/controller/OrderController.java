@@ -16,6 +16,7 @@
 package com.andy.orderservice.controller;
 
 import com.andy.orderservice.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +38,7 @@ public class OrderController {
 
     @Resource
     private OrderService orderService;
+
 
     /**
      * 下单：插入订单表、扣减库存，模拟回滚

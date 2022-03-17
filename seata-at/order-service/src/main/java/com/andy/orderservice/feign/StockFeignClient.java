@@ -16,6 +16,7 @@
 package com.andy.orderservice.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,5 +34,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface StockFeignClient {
 
     @GetMapping("stock/deduct")
+    @Async
     Boolean deduct(@RequestParam("commodityCode") String commodityCode, @RequestParam("count") Integer count);
 }

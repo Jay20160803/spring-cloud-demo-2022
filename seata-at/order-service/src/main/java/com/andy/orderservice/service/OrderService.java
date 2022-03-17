@@ -18,8 +18,11 @@ package com.andy.orderservice.service;
 import com.andy.orderservice.feign.StockFeignClient;
 import com.andy.orderservice.model.Order;
 import com.andy.orderservice.repository.OrderDAO;
+import com.andy.orderservice.utils.TransactionUtils;
 import io.seata.spring.annotation.GlobalTransactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -43,6 +46,8 @@ public class OrderService {
     private StockFeignClient stockFeignClient;
     @Resource
     private OrderDAO orderDAO;
+    @Autowired
+    private TransactionUtils transactionUtils;
 
     /**
      * 下单：创建订单、减库存，涉及到两个服务
@@ -52,12 +57,20 @@ public class OrderService {
      * @param count
      */
     @GlobalTransactional
-    @Transactional(rollbackFor = Exception.class)
     public void placeOrder(String userId, String commodityCode, Integer count) {
-        BigDecimal orderMoney = new BigDecimal(count).multiply(new BigDecimal(5));
-        Order order = new Order().setUserId(userId).setCommodityCode(commodityCode).setCount(count).setMoney(
-            orderMoney);
-        orderDAO.insert(order);
+
+        TransactionStatus transactionStatus = transactionUtils.begin();
+
+        try{
+            BigDecimal orderMoney = new BigDecimal(count).multiply(new BigDecimal(5));
+            Order order = new Order().setUserId(userId).setCommodityCode(commodityCode).setCount(count).setMoney(
+                    orderMoney);
+            orderDAO.insert(order);
+            transactionUtils.commit(transactionStatus);
+        }catch (Exception e){
+            transactionUtils.rollback(transactionStatus);
+        }
+
         stockFeignClient.deduct(commodityCode, count);
 
     }
