@@ -15,10 +15,10 @@
  */
 package com.andy.orderservicetcc.feign;
 
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.math.BigDecimal;
 
 /**
  * Program Name: springcloud-nacos-seata
@@ -30,8 +30,10 @@ import java.math.BigDecimal;
  * @version 1.0
  * @date 2019/8/28 4:05 PM
  */
-public interface AccountFeignClient {
+@FeignClient(name = "stock-service-tcc")
+public interface StockTccFeignClient {
 
-    @GetMapping("/reduce")
-    Boolean reduce(@RequestParam("userId") String userId, @RequestParam("money") BigDecimal money);
+    @GetMapping("stock/prepareDeduct")
+    @Async
+    Boolean prepareDeduct(@RequestParam("commodityCode") String commodityCode, @RequestParam("count") Integer count);
 }

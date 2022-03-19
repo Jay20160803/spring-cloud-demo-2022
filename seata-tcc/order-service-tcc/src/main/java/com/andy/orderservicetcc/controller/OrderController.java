@@ -15,7 +15,7 @@
  */
 package com.andy.orderservicetcc.controller;
 
-import com.andy.orderservice.service.OrderService;
+import com.andy.orderservicetcc.service.CreateOrderService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +36,7 @@ import javax.annotation.Resource;
 public class OrderController {
 
     @Resource
-    private OrderService orderService;
+    private CreateOrderService orderService;
 
 
     /**

@@ -39,3 +39,7 @@ logging:
   level:
     io:
       seata: debug
+    com:
+      andy:
+        stockservicetcc:
+          repository: debug

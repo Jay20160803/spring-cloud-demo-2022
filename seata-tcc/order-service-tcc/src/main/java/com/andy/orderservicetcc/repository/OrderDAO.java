@@ -15,7 +15,7 @@
  */
 package com.andy.orderservicetcc.repository;
 
-import com.andy.orderservice.model.Order;
+import com.andy.orderservicetcc.model.Order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

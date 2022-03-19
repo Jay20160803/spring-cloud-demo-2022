@@ -15,7 +15,7 @@
  */
 package com.andy.stockservicetcc.controller;
 
-import com.andy.stockservicetcc.service.StockService;
+import com.andy.stockservicetcc.service.StockServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +36,7 @@ import javax.annotation.Resource;
 public class StockController {
 
     @Resource
-    private StockService stockService;
+    private StockServiceImpl stockService;
 
     /**
      * 减库存
@@ -45,9 +45,9 @@ public class StockController {
      * @param count         数量
      * @return
      */
-    @RequestMapping(path = "/deduct")
-    public Boolean deduct(String commodityCode, Integer count) {
-        stockService.deduct(commodityCode, count);
+    @RequestMapping(path = "/prepareDeduct")
+    public Boolean prepareDeduct(String commodityCode, Integer count) {
+        stockService.prepare(null,commodityCode, count);
         return true;
     }
 

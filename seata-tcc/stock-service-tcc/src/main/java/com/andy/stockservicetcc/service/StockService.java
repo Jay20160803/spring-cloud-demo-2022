@@ -1,61 +1,46 @@
-/*
- *  Copyright 1999-2021 Seata.io Group.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
 package com.andy.stockservicetcc.service;
 
-import com.andy.stockservicetcc.entity.Stock;
-import com.andy.stockservicetcc.repository.StockDAO;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
+import io.seata.rm.tcc.api.BusinessActionContext;
+import io.seata.rm.tcc.api.BusinessActionContextParameter;
+import io.seata.rm.tcc.api.LocalTCC;
+import io.seata.rm.tcc.api.TwoPhaseBusinessAction;
 
 /**
- * Program Name: springcloud-nacos-seata
- * <p>
- * Description:
- * <p>
- *
- * @author zhangjianwei
- * @version 1.0
- * @date 2019/8/28 4:05 PM
+ * @Author Andy
+ * @Date: 2022/03/19/ 15:24
+ * @Description
  */
-@Service
-public class StockService {
+@LocalTCC
+public interface StockService {
 
-    @Resource
-    private StockDAO stockDAO;
 
     /**
-     * 减库存
+     * Prepare boolean.
      *
+     * @param actionContext the action context
      * @param commodityCode
      * @param count
+     * @return the boolean
      */
-    @Transactional(rollbackFor = Exception.class)
-    public void deduct(String commodityCode, int count) {
-        if (commodityCode.equals("product-2")) {
-            throw new RuntimeException("异常:模拟业务异常:stock branch exception");
-        }
+    @TwoPhaseBusinessAction(name = "stockTccService", commitMethod = "commit", rollbackMethod = "rollback")
+    boolean prepare(BusinessActionContext actionContext,
+                           @BusinessActionContextParameter(paramName = "commodityCode")String commodityCode,
+                           @BusinessActionContextParameter(paramName = "count")Integer count
+    );
 
-        QueryWrapper<Stock> wrapper = new QueryWrapper<>();
-        wrapper.setEntity(new Stock().setCommodityCode(commodityCode));
-        Stock stock = stockDAO.selectOne(wrapper);
-        stock.setCount(stock.getCount() - count);
+    /**
+     * Commit boolean.
+     *
+     * @param actionContext the action context
+     * @return the boolean
+     */
+     boolean commit(BusinessActionContext actionContext);
 
-        stockDAO.updateById(stock);
-    }
+    /**
+     * Rollback boolean.
+     *
+     * @param actionContext the action context
+     * @return the boolean
+     */
+     boolean rollback(BusinessActionContext actionContext);
 }

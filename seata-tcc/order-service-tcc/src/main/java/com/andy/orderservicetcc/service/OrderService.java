@@ -1,90 +1,49 @@
-/*
- *  Copyright 1999-2021 Seata.io Group.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
 package com.andy.orderservicetcc.service;
 
-import com.andy.orderservice.feign.StockFeignClient;
-import com.andy.orderservice.model.Order;
-import com.andy.orderservice.repository.OrderDAO;
-import com.andy.orderservice.utils.TransactionUtils;
-import io.seata.spring.annotation.GlobalTransactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
-
-import javax.annotation.Resource;
-import java.math.BigDecimal;
+import io.seata.rm.tcc.api.BusinessActionContext;
+import io.seata.rm.tcc.api.BusinessActionContextParameter;
+import io.seata.rm.tcc.api.LocalTCC;
+import io.seata.rm.tcc.api.TwoPhaseBusinessAction;
 
 /**
- * Program Name: springcloud-nacos-seata
- * <p>
- * Description:
- * <p>
- *
- * @author zhangjianwei
- * @version 1.0
- * @date 2019/8/28 4:05 PM
+ * @Author Andy
+ * @Date: 2022/03/19/ 14:43
+ * @Description
  */
-@Service
-public class OrderService {
+@LocalTCC
+public interface OrderService {
 
-
-    @Resource
-    private StockFeignClient stockFeignClient;
-    @Resource
-    private OrderDAO orderDAO;
-    @Autowired
-    private TransactionUtils transactionUtils;
 
     /**
-     * 下单：创建订单、减库存，涉及到两个服务
+     * Prepare boolean.
      *
+     * @param actionContext the action context
      * @param userId
      * @param commodityCode
      * @param count
+     * @return the boolean
      */
-    @GlobalTransactional
-    public void placeOrder(String userId, String commodityCode, Integer count) {
+    @TwoPhaseBusinessAction(name = "orderTccService", commitMethod = "commit", rollbackMethod = "rollback")
+    public boolean prepare(BusinessActionContext actionContext,
+                           @BusinessActionContextParameter(paramName = "userId")String userId,
+                           @BusinessActionContextParameter(paramName = "commodityCode")String commodityCode,
+                           @BusinessActionContextParameter(paramName = "count")Integer count
+                           );
 
-        TransactionStatus transactionStatus = transactionUtils.begin();
+    /**
+     * Commit boolean.
+     *
+     * @param actionContext the action context
+     * @return the boolean
+     */
+    public boolean commit(BusinessActionContext actionContext);
 
-        try{
-            BigDecimal orderMoney = new BigDecimal(count).multiply(new BigDecimal(5));
-            Order order = new Order().setUserId(userId).setCommodityCode(commodityCode).setCount(count).setMoney(
-                    orderMoney);
-            orderDAO.insert(order);
-            transactionUtils.commit(transactionStatus);
-        }catch (Exception e){
-            transactionUtils.rollback(transactionStatus);
-        }
-
-        stockFeignClient.deduct(commodityCode, count);
-
-    }
-
-  /*  @Transactional(rollbackFor = Exception.class)
-    public void create(String userId, String commodityCode, Integer count) {
-
-        BigDecimal orderMoney = new BigDecimal(count).multiply(new BigDecimal(5));
-
-        Order order = new Order().setUserId(userId).setCommodityCode(commodityCode).setCount(count).setMoney(
-            orderMoney);
-        orderDAO.insert(order);
-
-        accountFeignClient.reduce(userId, orderMoney);
-
-    }*/
+    /**
+     * Rollback boolean.
+     *
+     * @param actionContext the action context
+     * @return the boolean
+     */
+    public boolean rollback(BusinessActionContext actionContext);
 
 }
