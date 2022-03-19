@@ -13,12 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.andy.orderservice.feign;
+package com.andy.orderservicetcc.repository;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.math.BigDecimal;
+import com.andy.orderservice.model.Order;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * Program Name: springcloud-nacos-seata
@@ -30,8 +30,8 @@ import java.math.BigDecimal;
  * @version 1.0
  * @date 2019/8/28 4:05 PM
  */
-public interface AccountFeignClient {
+@Mapper
+@Repository
+public interface OrderDAO extends BaseMapper<Order> {
 
-    @GetMapping("/reduce")
-    Boolean reduce(@RequestParam("userId") String userId, @RequestParam("money") BigDecimal money);
 }

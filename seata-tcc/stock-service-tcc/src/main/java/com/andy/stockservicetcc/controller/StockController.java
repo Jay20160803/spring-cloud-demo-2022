@@ -13,9 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.andy.orderservice.controller;
+package com.andy.stockservicetcc.controller;
 
-import com.andy.orderservice.service.OrderService;
+import com.andy.stockservicetcc.service.StockService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,40 +32,23 @@ import javax.annotation.Resource;
  * @date 2019/8/28 4:05 PM
  */
 @RestController
-@RequestMapping("order")
-public class OrderController {
+@RequestMapping("stock")
+public class StockController {
 
     @Resource
-    private OrderService orderService;
-
-
-    /**
-     * 下单：插入订单表、扣减库存，模拟回滚
-     *
-     * @return
-     */
-    @RequestMapping("/placeOrder/commit")
-    public Boolean placeOrderCommit() {
-
-        orderService.placeOrder("1", "product-1", 1);
-        return true;
-    }
+    private StockService stockService;
 
     /**
-     * 下单：插入订单表、扣减库存，模拟回滚
+     * 减库存
      *
+     * @param commodityCode 商品代码
+     * @param count         数量
      * @return
      */
-    @RequestMapping("/placeOrder/rollback")
-    public Boolean placeOrderRollback() {
-        // product-2 扣库存时模拟了一个业务异常,
-        orderService.placeOrder("1", "product-2", 1);
+    @RequestMapping(path = "/deduct")
+    public Boolean deduct(String commodityCode, Integer count) {
+        stockService.deduct(commodityCode, count);
         return true;
     }
 
-    @RequestMapping("/placeOrder")
-    public Boolean placeOrder(String userId, String commodityCode, Integer count) {
-        orderService.placeOrder(userId, commodityCode, count);
-        return true;
-    }
 }

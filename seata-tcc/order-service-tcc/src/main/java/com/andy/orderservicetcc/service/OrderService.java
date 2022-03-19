@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.andy.orderservice.service;
+package com.andy.orderservicetcc.service;
 
 import com.andy.orderservice.feign.StockFeignClient;
 import com.andy.orderservice.model.Order;
@@ -62,7 +62,7 @@ public class OrderService {
 
         try{
             BigDecimal orderMoney = new BigDecimal(count).multiply(new BigDecimal(5));
-            com.andy.orderservice.model.Order order = new Order().setUserId(userId).setCommodityCode(commodityCode).setCount(count).setMoney(
+            Order order = new Order().setUserId(userId).setCommodityCode(commodityCode).setCount(count).setMoney(
                     orderMoney);
             orderDAO.insert(order);
             transactionUtils.commit(transactionStatus);

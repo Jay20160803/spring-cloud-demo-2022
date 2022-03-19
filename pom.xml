@@ -26,8 +26,8 @@
         <module>eureka-server</module>
         <module>eureka-client</module>
         <module>eureka-consumer</module>
-        <module>seata</module>
         <module>seata-at</module>
+        <module>seata-tcc</module>
     </modules>
 
     <dependencyManagement>

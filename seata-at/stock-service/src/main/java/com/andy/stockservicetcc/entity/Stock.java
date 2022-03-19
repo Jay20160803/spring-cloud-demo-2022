@@ -13,12 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.andy.orderservice.feign;
+package com.andy.stockservicetcc.entity;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.math.BigDecimal;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * Program Name: springcloud-nacos-seata
@@ -30,8 +29,13 @@ import java.math.BigDecimal;
  * @version 1.0
  * @date 2019/8/28 4:05 PM
  */
-public interface AccountFeignClient {
+@Data
+@Accessors(chain = true)
+@TableName("stock_tbl")
+public class Stock {
 
-    @GetMapping("/reduce")
-    Boolean reduce(@RequestParam("userId") String userId, @RequestParam("money") BigDecimal money);
+    private Long id;
+    private String commodityCode;
+    private Long count;
+
 }

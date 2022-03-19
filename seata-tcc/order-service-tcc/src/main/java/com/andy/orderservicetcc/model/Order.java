@@ -13,10 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.andy.orderservice.feign;
+package com.andy.orderservicetcc.model;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
@@ -30,8 +33,16 @@ import java.math.BigDecimal;
  * @version 1.0
  * @date 2019/8/28 4:05 PM
  */
-public interface AccountFeignClient {
+@Data
+@Accessors(chain = true)
+@TableName("order_tbl")
+public class Order {
 
-    @GetMapping("/reduce")
-    Boolean reduce(@RequestParam("userId") String userId, @RequestParam("money") BigDecimal money);
+    @TableId(type = IdType.AUTO)
+    private Integer id;
+    private String userId;
+    private String commodityCode;
+    private Integer count;
+    private BigDecimal money;
+
 }
