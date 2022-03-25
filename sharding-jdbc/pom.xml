@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.andy</groupId>
+        <artifactId>spring-cloud-demo-2022</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <groupId>com.andy</groupId>
+    <artifactId>sharding-jdbc</artifactId>
+    <packaging>pom</packaging>
+    <version>${revision}</version>
+    <name>sharding-jdbc</name>
+
+    <dependencies>
+
+
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>shardingsphere-jdbc-core-spring-boot-starter</artifactId>
+            <version>${shardingsphere.version}</version>
+        </dependency>
+    </dependencies>
+
+    <modules>
+        <module>example-api</module>
+        <module>example-mybatis</module>
+        <module>readwrite</module>
+    </modules>
+
+</project>
