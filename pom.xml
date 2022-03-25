@@ -20,6 +20,7 @@
         <druid.version>1.1.18</druid.version>
         <mybatis-plus>3.5.1</mybatis-plus>
         <seata-all-version>1.4.2</seata-all-version>
+        <shardingsphere.version>5.1.0</shardingsphere.version>
     </properties>
 
     <modules>
@@ -28,6 +29,7 @@
         <module>eureka-consumer</module>
         <module>seata-at</module>
         <module>seata-tcc</module>
+        <module>sharding-jdbc</module>
     </modules>
 
     <dependencyManagement>
