@@ -28,6 +28,7 @@
         <module>example-api</module>
         <module>example-mybatis</module>
         <module>readwrite</module>
+        <module>sharding-example</module>
     </modules>
 
 </project>

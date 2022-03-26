@@ -32,8 +32,8 @@ public class UserServiceImpl implements ExampleService {
         System.out.println("-------------- Process Success Begin ---------------");
         List<Long> userIds = insertData();
         printData();
-        deleteData(userIds);
-        printData();
+        //deleteData(userIds);
+        //printData();
         System.out.println("-------------- Process Success Finish --------------");
     }
 
